@@ -1,10 +1,10 @@
 export default class Basket {
 
-    constructor() {
+    constructor(container = '#basket-items', url = "/basket.json") {
         this.items = [];
         this.total =null;
-        this.url = 'https://raw.githubusercontent.com/sergeykotenkogithub/imageProject/main/json/basket.json';
-        this.container = null; 
+        this.url = 'https://raw.githubusercontent.com/sergeykotenkogithub/imageProject/main/json' + url;
+        this.container = document.querySelector(container); 
         this.wrapper = null;
         this.sum = 0;
         this.totalContainer = null;
@@ -14,8 +14,7 @@ export default class Basket {
 
     // Инициализация. Основное
     _init() { 
-        this.clickCart = document.querySelector('#clickCart');
-        this.container = document.querySelector('#basket-items');
+        this.clickCart = document.querySelector('#clickCart');        
         this.wrapper = document.querySelector('#basket-inner');
         this.totalContainer = document.querySelector('#basket-sum');
         // this.items = getBasketItems(TITLES, PRICES, AMOUNTS);
