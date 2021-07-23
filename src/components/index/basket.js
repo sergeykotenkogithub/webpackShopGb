@@ -1,44 +1,18 @@
-export default class Basket {
+import LIST from "./LIST";
 
-    constructor(container = '#basket-items', url = "/basket.json") {
-        this.items = [];
+export default class Basket extends LIST {
+
+    constructor(basket = null, container = '#basket-items', url = "/basket.json") {
+        super(basket, container, url)
         this.total =null;
-        this.url = 'https://raw.githubusercontent.com/sergeykotenkogithub/imageProject/main/json' + url;
-        this.container = document.querySelector(container); 
-        this.wrapper = null;
-        this.sum = 0;
-        this.totalContainer = null;
-        this.clickCart = null;
-        this._init()
-    }
-
-    // Инициализация. Основное
-    _init() { 
-        this.clickCart = document.querySelector('#clickCart');        
         this.wrapper = document.querySelector('#basket-inner');
+        this.sum = 0;
         this.totalContainer = document.querySelector('#basket-sum');
-        // this.items = getBasketItems(TITLES, PRICES, AMOUNTS);
-
-        //async
-        this._get(this.url) //Метод подключения к json на git
-        .then(basket => { // название basket не влияет
-        this.items = basket.content;
-        this._render();
-        this._handleEvents();
-        });
+        this.clickCart = document.querySelector('#clickCart');
     }
 
-    _get(url) {
-        return fetch(url).then(d => d.json()) // сделает запрос за джейсоном, дождётся ответа и преобразует json в объект, который вернётся из даного метода
-    }
-
-    _render() {
-        let htmlStr = '';
-
-        this.items.forEach((item, i) => {
-            htmlStr += this.renderBasketTemplate(item, i);
-        });
-        this.container.innerHTML = htmlStr;
+    _render() { 
+        super._render()  
         this._calcSum();
     }
 
@@ -90,31 +64,5 @@ export default class Basket {
             this._remove(event.target.dataset.id)
         }
     });
-    }
-
-    renderBasketTemplate(item, i) {
-        return `
-        <div class="cartFlex">
-            <div><img   src="${item.productImg}" alt="buy4"></div>
-    
-            <div class="textCenterCart">
-                <div class="textByCart">${item.productName}</div>
-            <div>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </div>                  
-            <div class="priceCart">
-                ${item.amount} x <span>${item.productPrice}</span> = ${item.amount * item.productPrice}
-            </div>
-            </div>
-            <div class="cartCircle">
-                <a href="#" class="far fa-times-circle faCart" name="remove" data-id="${item.productId}"></a>
-            </div>        
-        </div> 
-        <div class="horizontal cartHorizontal"></div>   
-    `
-    }
+    } 
 }
