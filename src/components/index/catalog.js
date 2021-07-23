@@ -3,7 +3,8 @@ import LIST from "./LIST.js";
 export default class Catalog extends LIST {
 
   constructor(basket, container = "#catalog", url = "/catalog.json") {
-      super(basket, container, url)
+    super(basket, container, url);
+    this.type = 'catalog';
   }
 
   _handleEvents() {

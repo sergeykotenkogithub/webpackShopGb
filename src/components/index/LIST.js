@@ -6,14 +6,14 @@ export default class LIST {
         this.items = [];
         this.container = document.querySelector(container);
         this.basket = basket;
-        this.url = "https://raw.githubusercontent.com/sergeykotenkogithub/imageProject/main/json" + url;
+        this.url = "https://raw.githubusercontent.com/sergeykotenkogithub/imageProject/main/json" + url; 
         this._init()
     }
 
     _init() {        
         this._get(this.url) //Метод подключения к json на git
         .then(data => { 
-        this.items = this.basket ? data : data.content;
+        this.items = this.type === 'catalog' ? data : data.content;
         this._render();
         this._handleEvents();
         });
@@ -26,9 +26,8 @@ export default class LIST {
 
     _render() {
         let htmlStr = "";
-        let type = this.constructor.name.toLowerCase()
         this.items.forEach((item) => {
-          htmlStr += new ITEM(item, type).render();          
+          htmlStr += new ITEM(item, this.type).render();          
         });
         this.container.innerHTML = htmlStr;     
     }

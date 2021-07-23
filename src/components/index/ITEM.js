@@ -6,7 +6,7 @@ let itemTypes = {
 export default class ITEM {
     constructor(item, type) {
         this.item = item;
-        this.type = type;
+        this.type = type;  
     }
     render() {
         return itemTypes[this.type](this.item)
@@ -61,3 +61,4 @@ function basketItemRender(item) {
         <div class="horizontal cartHorizontal"></div>   
     `
 }
+

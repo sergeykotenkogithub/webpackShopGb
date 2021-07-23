@@ -4,11 +4,12 @@ export default class Basket extends LIST {
 
     constructor(basket = null, container = '#basket-items', url = "/basket.json") {
         super(basket, container, url)
+        this.type = 'basket';
         this.total =null;
         this.wrapper = document.querySelector('#basket-inner');
         this.sum = 0;
         this.totalContainer = document.querySelector('#basket-sum');
-        this.clickCart = document.querySelector('#clickCart');
+        this.clickCart = document.querySelector('#clickCart');        
     }
 
     _render() { 
