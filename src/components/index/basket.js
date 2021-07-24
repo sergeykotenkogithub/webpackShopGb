@@ -55,8 +55,7 @@ export default class Basket extends LIST {
 
     _handleEvents() {          
         document.querySelector('#basket-btn').addEventListener('click', e => {
-        this.wrapper.classList.toggle('hidden')
-        // toggle убирает класс, а если есть то добовляет, вот и получается что при нажатиее он показывается, а при втором закрывается (hidden в _header.scss)
+        this.wrapper.classList.toggle('hidden')        
         });
         
         //Удаление

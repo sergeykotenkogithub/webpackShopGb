@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <!-- Подключение  font-awesome  -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
       integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
       crossorigin="anonymous"
     />
- 
     <!-- Подключение bootstrap -->
     <link 
       rel="stylesheet"
@@ -18,9 +18,13 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
+
   </head>
 
   <body>
+
+  <div id="app">
+
     <header>
       <!-- Симантический тег! -->
       <div class="header">
@@ -39,7 +43,7 @@
 
           <!-- Подгрузка с Js корзины  -->
           <div id="basket">
-            <div class="img_Cart_header" id="clickCart" name>
+            <div class="img_Cart_header" id="clickCart" @click="basket.show = !basket.show">
               <div class="cartScale">
                 <img
                   class="cart"
@@ -48,13 +52,44 @@
                   id="basket-btn"
                 /><span class="cartNumber">2</span>
               </div>
-              <div class="buyCart hidden" id="basket-inner">
-                <div class="cartBuyItems" id="basket-items"></div>
+
+              <div class="buyCart" id="basket-inner" v-show="basket.show">
+
+                <!--     Тут вставляется блок с добавленными товарами           -->
+                <div class="cartBuyItems" id="basket-items" v-for="item of basket.items" :key="item.productId">
+                  <div class="cartFlex" >
+                    <div>
+                      <img :src="item.productImg" alt="buy4">
+                    </div>
+
+                    <div class="textCenterCart">
+                      <div class="textByCart">{{ item.productName }}</div>
+                      <div>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                      </div>
+                      <div class="priceCart">
+                        {{ item.amount }} x <span>{{ item.productPrice }}</span> = {{ item.amount * item.productPrice }}
+                      </div>
+                    </div>
+                    <div class="cartCircle">
+                      <a href="#" class="far fa-times-circle faCart" name="remove" data-id="${item.productId}"></a>
+                    </div>
+                  </div>
+                  <div class="horizontal cartHorizontal"></div>
+
+                </div>
 
                 <div class="priceBuyCart">
                   <div class="priceTextTotal">TOTAL:</div>
+<!--                  <p class="priceTextTotal">-->
+<!--                    $ <span id="basket-sum">500.00</span>-->
+<!--                  </p>  -->
                   <p class="priceTextTotal">
-                    $ <span id="basket-sum">500.00</span>
+                    $ <span id="basket-sum">{{ price }}</span>
                   </p>
                 </div>
                 <button>CHECKOUT</button>
@@ -137,148 +172,34 @@
       <div class="container">
         <!-- Тут вставляется catalog.js -->
         <div class="feature_block" id="catalog">
-          <!-- 1 картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor"> -->
-          <!-- Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy1.jpg" alt="buy1" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
 
-          <!-- 2 картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor"> -->
-          <!-- Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy2.jpg" alt="buy2" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
+        <!-- Тут вставляется блоки с товарам через vue js -->
 
-          <!-- 3 картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img class="img_product_size" src="../src/assets/images/buy3.jpg" alt="buy3" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
+          <div class="featuredBuyItem"
+               v-for="item of catalog.items"
+               :key="item.productId"
+          >
 
-          <!-- 4я картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
               <div class="addToCart">
                 <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
+                  <div>
+                    <button class="backColor newBackColor"
+                            name="add"
+                            @click="add(item)"
+                    >
+                      <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
+                      &nbsp ADD TO CART
+                    </button>
                   </div>
                 </div>
               </div>
-              <div><img src="../src/assets/images/buy4.jpg" alt="buy4" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
+              <div><img :src="item.productImg" alt="item"/></div>
+              <div class="name_buy_item">{{ item.productName }}</div>
+              <div class="price_item">$ {{ item.productPrice }} </div>
 
-          <!-- 2 блок Feature -->
-          <!-- 5я картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy5.jpg" alt="buy5" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
+          </div>
 
-          <!-- 6-я картинка -->
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy6.jpg" alt="buy6" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
 
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy7.jpg" alt="buy7" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
-
-          <!-- <div class="featuredBuyItem">
-            <a href="#">
-              <div class="addToCart">
-                <div class="coverAddtoCart">
-                  <div class="backColor">
-                    Задний фон картинки -->
-          <!-- <img class="cartBuy" src="../src/assets/images/carsBuy.png" alt="cartBuy" />
-                    <h2>Add to Cart</h2>
-                  </div>
-                </div>
-              </div>
-              <div><img src="../src/assets/images/buy8.jpg" alt="buy8" /></div>
-            </a>
-            <div class="name_buy_item">Mango People T-shirt</div>
-            <div class="price_item">$52.00</div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -465,6 +386,10 @@
         </div>
       </footer>
     </div>
+  </div>
+
+  <!-- Подключение Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
   </body>
 </html>
